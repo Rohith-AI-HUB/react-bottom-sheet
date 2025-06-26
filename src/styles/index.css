@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles for bottom sheet */
+@layer components {
+    .bottom-sheet-handle {
+        @apply w-12 h-1.5 bg-gray-300 rounded-full transition-colors duration-200;
+    }
+
+    .bottom-sheet-handle:hover {
+        @apply bg-gray-400;
+    }
+
+    .control-button {
+        @apply px-4 py-2 bg-white bg-opacity-20 backdrop-blur-sm rounded-lg transition-colors duration-200;
+    }
+
+    .control-button:hover {
+        @apply bg-white bg-opacity-30;
+    }
+}
+
+/* Smooth scrolling for better UX */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Prevent text selection during drag */
+.dragging * {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
