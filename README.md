@@ -2,7 +2,7 @@
 
 A React application featuring a bottom sheet component with multiple screen snap points and spring motion animations. Built without external animation libraries, this component demonstrates advanced React patterns and custom animation implementations.
 
-![React Bottom Sheet Demo](https://img.shields.io/badge/React-18.2.0-blue?logo=react)
+[Live Demo](https://react-bottom-sheet-eight.vercel.app/)
 ![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.3.0-blue?logo=tailwindcss)
 ![License](https://img.shields.io/badge/License-MIT-green)
 ---
