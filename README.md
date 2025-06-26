@@ -47,7 +47,6 @@ A React application featuring a bottom sheet component with multiple screen snap
 - [Customization](#customization)
 - [Browser Support](#browser-support)
 - [Performance](#performance)
-- [Accessibility](#accessibility)
 - [Contributing](#contributing)
 - [License](#license)
 
