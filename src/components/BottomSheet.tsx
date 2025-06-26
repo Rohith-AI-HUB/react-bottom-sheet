@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 
-const BottomSheet = () => {
+interface SnapPoints {closed: number;half: number;full: number;}
+
+const BottomSheet: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [snapPoint, setSnapPoint] = useState('closed'); // 'closed', 'half', 'full'
+    const [snapPoint, setSnapPoint] = useState<'closed' | 'half' | 'full'>('closed'); // 'closed', 'half', 'full'
     const [isDragging, setIsDragging] = useState(false);
     const [dragStartY, setDragStartY] = useState(0);
     const [currentTranslateY, setCurrentTranslateY] = useState(0);
@@ -10,14 +12,14 @@ const BottomSheet = () => {
     const [lastMoveTime, setLastMoveTime] = useState(0);
     const [lastMoveY, setLastMoveY] = useState(0);
 
-    const sheetRef = useRef(null);
-    const animationRef = useRef(null);
-    const startTimeRef = useRef(0);
-    const startValueRef = useRef(0);
-    const targetValueRef = useRef(0);
+    const sheetRef = useRef<HTMLDivElement>(null);
+    const animationRef = useRef<number | null>(null);
+    const startTimeRef = useRef<number>(0);
+    const startValueRef = useRef<number>(0);
+    const targetValueRef = useRef<number>(0);
 
     // Snap point positions (percentage of screen height)
-    const snapPoints = {
+    const snapPoints: SnapPoints = {
         closed: 85, // 85% from top (only handle visible)
         half: 50,   // 50% from top (half open)
         full: 10    // 10% from top (fully open)
@@ -52,7 +54,7 @@ const BottomSheet = () => {
             animationRef.current = null;
             startTimeRef.current = 0;
         }
-    }, []);
+    }, [snapPoints]);
 
     // Animate to target snap point
     const animateToSnapPoint = useCallback((targetSnap) => {
@@ -71,7 +73,7 @@ const BottomSheet = () => {
     }, [currentTranslateY, springAnimation]);
 
     // Find nearest snap point based on position and velocity
-    const findNearestSnapPoint = useCallback((translateY, vel) => {
+    const findNearestSnapPoint = useCallback((translateY: number, vel: number) => {
         const positions = Object.entries(snapPoints);
 
         // If velocity is significant, consider direction
@@ -98,7 +100,7 @@ const BottomSheet = () => {
         });
 
         return closest;
-    }, []);
+    }, [snapPoints]);
 
     // Handle drag start
     const handleDragStart = useCallback((clientY) => {
@@ -112,7 +114,7 @@ const BottomSheet = () => {
             cancelAnimationFrame(animationRef.current);
             animationRef.current = null;
         }
-    }, []);
+    }, [snapPoints]);
 
     // Handle drag move
     const handleDragMove = useCallback((clientY) => {
@@ -147,12 +149,12 @@ const BottomSheet = () => {
     }, [isDragging, currentTranslateY, velocity, findNearestSnapPoint, animateToSnapPoint]);
 
     // Mouse events
-    const handleMouseDown = (e) => {
+    const handleMouseDown = (e: React.MouseEvent) => {
         e.preventDefault();
         handleDragStart(e.clientY);
     };
 
-    const handleMouseMove = useCallback((e) => {
+    const handleMouseMove = useCallback((e: MouseEvent) => {
         handleDragMove(e.clientY);
     }, [handleDragMove]);
 
@@ -161,11 +163,11 @@ const BottomSheet = () => {
     }, [handleDragEnd]);
 
     // Touch events
-    const handleTouchStart = (e) => {
+    const handleTouchStart = (e: React.TouchEvent) => {
         handleDragStart(e.touches[0].clientY);
     };
 
-    const handleTouchMove = useCallback((e) => {
+    const handleTouchMove = useCallback((e: TouchEvent) => {
         e.preventDefault();
         handleDragMove(e.touches[0].clientY);
     }, [handleDragMove]);
@@ -194,7 +196,7 @@ const BottomSheet = () => {
     // Initialize position
     useEffect(() => {
         setCurrentTranslateY(snapPoints.closed);
-    }, []);
+    }, [snapPoints.closed]);
 
     // Cleanup animation on unmount
     useEffect(() => {

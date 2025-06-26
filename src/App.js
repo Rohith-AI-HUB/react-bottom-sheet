@@ -1,5 +1,5 @@
 import React from 'react';
-import BottomSheet from './components/BottomSheet';
+import BottomSheet from './components/BottomSheet.tsx';
 import './App.css';
 
 function App() {
